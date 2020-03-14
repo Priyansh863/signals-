@@ -21,3 +21,7 @@ class employee(models.Model):
 def user_save(sender,instance,**kwargs):
     admin1.objects.create(name=instance.name,password=instance.password,age=instance.age)
 pre_save.connect(user_save,sender=employee)
+
+class xyz(models.Model):
+    employee_code=models.CharField(max_length=30)
+    age=models.IntegerField()
