@@ -1,29 +1,34 @@
 from django.core.mail import send_mail
 from rest_framework.response import Response
 from django.http import HttpResponse
+from django.template.loader import render_to_string, get_template
+from rest_framework import viewsets
 from signalapp.models import employee
+from django.contrib.auth.models import User
+from signalapp.serializers import *
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 p=5
 for i in range(0,5):
     def xyz(request):
+        templt=render_to_string('xyz.html',{'Name':'karan'})
 
 
 
 
-        x="arushijhalani9220@gmail.com"
+
+        x="deykaran07@gmail.com"
+        y="jhalanipriyansh25@gmail.com"
         #y="priyanshjhalani30@gmail.com"
         sender="priyanshjhalani0@gmail.com"
         #sender="priyanshjhalani30@gmail.com"
 
         send_mail(
         'Subject here',
-        '''The Lion and the Mouse
-
-    One of Aesop's Fables, numbered 150 in the Perry Index
-
-    The Lion and the Mouse is one of Aesop's Fables, numbered 150 in the Perry Index. There are also Eastern variants of the story, all of which''',
+        ' ',
         sender,
-        [x],
-        fail_silently=False,
+        [x,y],
+        fail_silently=False,html_message=templt
         )
         return HttpResponse("ok")
 
@@ -34,22 +39,25 @@ for i in range(0,5):
 
 
 
-class lietset(vietset)
 
 
 
 
 
-'''
-class login_employee(viewsets.ViewSet):
+
+
+'''class login_employee(viewsets.ViewSet):
     def create(self,request):
-        serializers=login_employee1
+        serializers=log_in(data=request.data)
         if serializers.is_valid():
-            flag=serializers.data['key']
+            flag=serializers.data['username']
             flag1=serializers.data['password']
-            p=employee.objects.all()
+
+
             try:
-                a=employee.objects.get(hod_email=flag)
+                p=employee.objects.get()
+                p=User.objects.get(username=)
+
 
             except:
                 try:
@@ -62,6 +70,24 @@ class login_employee(viewsets.ViewSet):
             else:
                 return Response('Password not valid ')
         else:
-            return Response(serializers.errors)
+            return Response(serializers.errors)'''
 
-'''
+class employee_viewset(viewsets.ModelViewSet):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        u=self.request.user
+        if x.type==admin:
+            employee.objects.all()
+        else:
+            employee.objects.filter(id=1)
+
+        print('\n\n\n',u,' \n\n')
+
+
+        x=employee.objects.filter(id=1)
+        return x
+
+    serializer_class = employee_serial
+    http_method_names = ['get','post','patch']
